@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend-api
+  template:
+    metadata:
+      labels:
+        app: backend-api
+    spec:
+      containers:
+      - name: backend-api
+        image: nginx:latest
+        imagePullPolicy: Always
+        imagePullSecrets:
+          - name: regcred
+        livenessProbe:
+          httpGet:
+            path: /health_check
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        ports:
+        - containerPort: 5000
