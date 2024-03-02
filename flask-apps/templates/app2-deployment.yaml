@@ -1,19 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: app1
+  name: app2
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
-      app: app1
+      app: app2
   template:
     metadata:
       labels:
-        app: app1
+        app: app2
     spec:
       containers:
-      - name: app1
-        image: 
+      - name: app2
+        image: nginx:latest
         ports:
         - containerPort: 5000
+      volumes:
+      - name: main-volume
+        persistentVolumeClaim:
+           claimName: task-pv-claim
