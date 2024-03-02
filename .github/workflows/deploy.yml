@@ -2,7 +2,7 @@ name: Build images and deploy to ECR AWS
 on:
     push:
       branches:
-        - master
+        - main
 #Change master branch to the main (disabled it to prevent actions working for dev stage)
 env:
     AWS_REGION: eu-west-2
