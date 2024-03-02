@@ -6,8 +6,8 @@ on:
 #Change master branch to the main (disabled it to prevent actions working for dev stage)
 env:
     AWS_REGION: eu-west-2
-    ECR_REPOSITORY-1: app-1
-    ECR_REPOSITORY-2: app-2
+    ECR_REPOSITORY_1: app-1
+    ECR_REPOSITORY_2: app-2
 permissions:
     contents: read
 
