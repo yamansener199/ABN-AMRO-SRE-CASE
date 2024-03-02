@@ -1,0 +1,51 @@
+name: Build images and deploy to ECR AWS
+on:
+    push:
+      branches:
+        - master
+#Change master branch to the main (disabled it to prevent actions working for dev stage)
+env:
+    AWS_REGION: eu-west-2
+    ECR_REPOSITORY-1: app-1
+    ECR_REPOSITORY-2: app-2
+permissions:
+    contents: read
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ env.AWS_REGION }}
+    
+    - name: Login to Amazon ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v1
+
+    - name: Build, tag, and push image to Amazon ECR
+      id: build-image-1
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        IMAGE_TAG: ${{ github.sha }}
+      run: |
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY-1:$IMAGE_TAG ./backend_api
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY-1:$IMAGE_TAG
+        echo "image=$ECR_REGISTRY/$ECR_REPOSITORY-1:$IMAGE_TAG" >> $GITHUB_OUTPUT
+
+    - name: Build, tag, and push image to Amazon ECR
+      id: build-image-2
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        IMAGE_TAG: ${{ github.sha }}
+      run: |
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY-2:$IMAGE_TAG ./backend_api
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY-2:$IMAGE_TAG
+        echo "image=$ECR_REGISTRY/$ECR_REPOSITORY-2:$IMAGE_TAG" >> $GITHUB_OUTPUT

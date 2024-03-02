@@ -17,7 +17,6 @@ Update the backend and orchestrate migrating the 2 apps and script to kubernetes
 - Create helmchart for the stack
 - Deployment via Ansible
 
-
 #### Submission Guidelines:
 - Add the nessasory folder(s) and file(s).
 - If needed you may change the code structure or content or add technolgies, but its **not** part of the assessment
