@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: backend-api
-        image: nginx:latest
+        image: 816731947491.dkr.ecr.eu-west-2.amazonaws.com/backend_api:4d33f569668306ba8351fd69be2e0a4798f3a849
         imagePullPolicy: Always
         imagePullSecrets:
           - name: regcred
