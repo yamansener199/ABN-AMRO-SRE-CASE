@@ -20,6 +20,11 @@ spec:
       - name: regcred
         ports:
         - containerPort: 5000
+        securityContext:
+          readOnlyRootFilesystem: {{ .Values.securityContext.readOnlyRootFilesystem }}
+          runAsNonRoot: {{ .Values.securityContext.runAsNonRoot }}
+          runAsUser: {{ .Values.securityContext.runAsUser }}
+          allowPrivilegeEscalation: {{ .Values.securityContext.allowPrivilegeEscalation }}
       volumes:
       - name: main-volume
         persistentVolumeClaim:
