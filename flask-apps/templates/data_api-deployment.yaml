@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: data-api
 spec:
-  replicas: 2
+  replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
       app: data-api
@@ -14,7 +14,8 @@ spec:
     spec:
       containers:
       - name: data-api
-        image: 816731947491.dkr.ecr.eu-west-2.amazonaws.com/data_api:541fa748999fff5b4c485f0c6f8ed55c60efaa2d
+        image: {{ .Values.image.repository }}/data_api:{{ .Values.image.tagdata }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
       imagePullSecrets:
       - name: regcred
         ports:

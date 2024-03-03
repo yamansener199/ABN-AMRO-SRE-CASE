@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: backend-api
 spec:
-  replicas: 1
+  replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
       app: backend-api
@@ -14,13 +14,14 @@ spec:
     spec:
       containers:
       - name: backend-api
-        image: 816731947491.dkr.ecr.eu-west-2.amazonaws.com/backend_api:541fa748999fff5b4c485f0c6f8ed55c60efaa2d
+        image: {{ .Values.image.repository }}/data_api:{{ .Values.image.tagbackend }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
       imagePullSecrets:
       - name: regcred
         livenessProbe:
           httpGet:
             path: /health_check
-            port: 8080
+            port: 5000
           initialDelaySeconds: 5
           periodSeconds: 5
         ports:
