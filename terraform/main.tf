@@ -4,7 +4,7 @@ resource "aws_eks_cluster" "case-eks" {
  version  = "1.27"
 
  vpc_config {
-  subnet_ids = ["subnet-0e5834bfa3857f698", "subnet-05535b2c351f93257"]
+  subnet_ids = ["subnet-08425f773f2d4a055", "subnet-093ee1ff59056f956"]
  }
 
  depends_on = [
@@ -16,7 +16,7 @@ resource "aws_eks_node_group" "node-ec2" {
   cluster_name    = aws_eks_cluster.case-eks.name
   node_group_name = "t3_micro-node_group"
   node_role_arn   = aws_iam_role.workernodes.arn
-  subnet_ids = ["subnet-0e5834bfa3857f698", "subnet-05535b2c351f93257"]
+  subnet_ids = ["subnet-08425f773f2d4a055", "subnet-093ee1ff59056f956"]
 
   scaling_config {
     desired_size = 2

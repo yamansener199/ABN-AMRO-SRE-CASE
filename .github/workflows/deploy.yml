@@ -52,15 +52,3 @@ jobs:
         docker push $ECR_REGISTRY/$ECR_REPOSITORY_2:$IMAGE_TAG
         sed -i 's/tagdata:.*/tagdata: $IMAGE_TAG/g' ./flask-apps/values.yml
         echo "image=$ECR_REGISTRY/$ECR_REPOSITORY_2:$IMAGE_TAG" >> $GITHUB_OUTPUT
-
-    #- name: Package the Helm Chart and Push to Amazon ECR
-      #env:
-      #    ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-      #    ECR_REPOSITORY: ${{ env.ECR_REPOSITORY_HELM }}
-      #run : |
-      #  helm package \
-      #  chart \
-      #  --app-version ${{ inputs.tag-name }} \
-      #  --version ${{ inputs.tag-name }}
-      #  helm push "${{ env.ECR_REPOSITORY_HELM }}-${{ inputs.tag-name }}.tgz" oci://$ECR_REGISTRY
-      #shell: bash
