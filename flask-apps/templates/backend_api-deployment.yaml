@@ -16,14 +16,6 @@ spec:
       - name: backend-api
         image: {{ .Values.image.repository }}/data_api:{{ .Values.image.tagbackend }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
-      imagePullSecrets:
-      - name: regcred
-        livenessProbe:
-          httpGet:
-            path: /health_check
-            port: 5000
-          initialDelaySeconds: 5
-          periodSeconds: 5
         ports:
         - containerPort: 5000
         securityContext:
@@ -31,3 +23,5 @@ spec:
           runAsNonRoot: {{ .Values.securityContext.runAsNonRoot }}
           runAsUser: {{ .Values.securityContext.runAsUser }}
           allowPrivilegeEscalation: {{ .Values.securityContext.allowPrivilegeEscalation }}
+      imagePullSecrets:
+      - name: regcred
