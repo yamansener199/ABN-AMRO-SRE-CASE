@@ -7,6 +7,6 @@ spec:
     app: backend-api
   ports:
     - protocol: TCP
-      port: 90
-      targetPort: 5001
+      port: 8080
+      targetPort: 5000
   type: NodePort
