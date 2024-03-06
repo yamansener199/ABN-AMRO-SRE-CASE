@@ -5,7 +5,7 @@ backend_api:
   replicaCount: 2
   image:
     repository: 816731947491.dkr.ecr.eu-west-2.amazonaws.com
-    tagbackend: 541fa748999fff5b4c485f0c6f8ed55c60efaa2d
+    tagbackend: 998133865b6b0506a9cfccc2d05e920c0085c65c
     pullPolicy: IfNotPresent
   hpaName: backendhpa
   securityContext:
@@ -55,7 +55,7 @@ data_api:
   replicaCount: 2
   image:
     repository: 816731947491.dkr.ecr.eu-west-2.amazonaws.com
-    tagdata: 541fa748999fff5b4c485f0c6f8ed55c60efaa2d
+    tagdata: 998133865b6b0506a9cfccc2d05e920c0085c65c
     pullPolicy: IfNotPresent
   hpaName: datahpa
   securityContext:

@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: backend-api
-        image: {{ .Values.backend_api.image.repository }}/data_api:{{ .Values.backend_api.image.tagbackend }}
+        image: {{ .Values.backend_api.image.repository }}/backend_api:{{ .Values.backend_api.image.tagbackend }}
         resources:
           limits:
             cpu: {{ .Values.backend_api.resources.limits.cpu }}
@@ -22,6 +22,12 @@ spec:
           requests:
             cpu: {{ .Values.backend_api.resources.requests.cpu }}
             memory: {{ .Values.backend_api.resources.requests.memory }}
+        livenessProbe:
+          httpGet:
+            path: /health_check
+            port: 5000
+          initialDelaySeconds: 20
+          periodSeconds: 5
         imagePullPolicy: {{ .Values.backend_api.image.pullPolicy }}
         ports:
         - containerPort: 5000
