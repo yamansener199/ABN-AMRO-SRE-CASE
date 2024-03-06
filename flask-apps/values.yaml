@@ -50,6 +50,14 @@ backend_api:
     targetCPUUtilizationPercentage: 80
     targetMemoryUtilizationPercentage: 80
 
+  external_integration_keys:
+    dev:
+      api_key: ""
+    staging:
+      api_key: ""
+    prod:
+      api_key: ""
+
 
 data_api:
   replicaCount: 2

@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: backend-api
+  name: {{ .Release.Name }}-backend-api
 spec:
   replicas: {{ .Values.backend_api.replicaCount }}
   selector:
     matchLabels:
-      app: backend-api
+      app: {{ .Release.Name }}-backend-api
   template:
     metadata:
       labels:
-        app: backend-api
+        app: {{ .Release.Name }}-backend-api
     spec:
       containers:
-      - name: backend-api
+      - name: {{ .Release.Name }}-backend-api
         image: {{ .Values.backend_api.image.repository }}/backend_api:{{ .Values.backend_api.image.tagbackend }}
         resources:
           limits:
@@ -29,6 +29,17 @@ spec:
           initialDelaySeconds: 20
           periodSeconds: 5
         imagePullPolicy: {{ .Values.backend_api.image.pullPolicy }}
+        env:          
+          - name: "USERNAME"
+            valueFrom:
+              secretKeyRef:
+                key:  username
+                name: {{ .Release.Name }}-backend-auth
+          - name: "PASSWORD"
+            valueFrom:
+              secretKeyRef:
+                key:  password
+                name: {{ .Release.Name }}-backend-auth
         ports:
         - containerPort: 5000
         securityContext:

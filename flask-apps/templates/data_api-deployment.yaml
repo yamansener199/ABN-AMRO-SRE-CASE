@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: data-api
+  name: {{ .Release.Name }}-data-api
 spec:
   replicas: {{ .Values.data_api.replicaCount }}
   selector:
     matchLabels:
-      app: data-api
+      app: {{ .Release.Name }}-data-api
   template:
     metadata:
       labels:
-        app: data-api
+        app: {{ .Release.Name }}-data-api
     spec:
       containers:
-      - name: data-api
+      - name: {{ .Release.Name }}-data-api
         image: {{ .Values.data_api.image.repository }}/data_api:{{ .Values.data_api.image.tagdata }}
         resources:
           limits:
@@ -31,6 +31,6 @@ spec:
           runAsUser: {{ .Values.data_api.securityContext.runAsUser }}
           allowPrivilegeEscalation: {{ .Values.data_api.securityContext.allowPrivilegeEscalation }}
       volumes:
-      - name: main-volume
+      - name: {{ .Release.Name }}-main-volume
         persistentVolumeClaim:
-           claimName: task-pv-claim
+           claimName: {{ .Release.Name }}-task-pv-claim
