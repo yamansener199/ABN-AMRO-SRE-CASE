@@ -39,7 +39,7 @@ jobs:
       run: |
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY_1:$IMAGE_TAG ./backend_api
         docker push $ECR_REGISTRY/$ECR_REPOSITORY_1:$IMAGE_TAG
-        sed -i 's/tagbackend:.*/tagbackend: $IMAGE_TAG/g' ./flask-apps/values.yml
+        sed -i 's/tagbackend:.*/tagbackend: $IMAGE_TAG/g' ./flask-apps/values.yaml
         echo "image=$ECR_REGISTRY/$ECR_REPOSITORY_1:$IMAGE_TAG" >> $GITHUB_OUTPUT
 
     - name: Build, tag, and push image to Amazon ECR
@@ -50,5 +50,5 @@ jobs:
       run: |
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY_2:$IMAGE_TAG ./data_api
         docker push $ECR_REGISTRY/$ECR_REPOSITORY_2:$IMAGE_TAG
-        sed -i 's/tagdata:.*/tagdata: $IMAGE_TAG/g' ./flask-apps/values.yml
+        sed -i 's/tagdata:.*/tagdata: $IMAGE_TAG/g' ./flask-apps/values.yaml
         echo "image=$ECR_REGISTRY/$ECR_REPOSITORY_2:$IMAGE_TAG" >> $GITHUB_OUTPUT
