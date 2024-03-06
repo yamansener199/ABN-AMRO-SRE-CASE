@@ -4,7 +4,8 @@ metadata:
   name: task-pv-claim
 spec:
   accessModes:
-    - ReadWriteMany
+    - ReadWriteOnce
   resources:
     requests:
       storage: 3Gi
+  storageClassName: gp2

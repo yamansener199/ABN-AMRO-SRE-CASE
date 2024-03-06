@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: backend-api
 spec:
-  replicas: {{ .Values.replicaCount }}
+  replicas: {{ .Values.backend_api.replicaCount }}
   selector:
     matchLabels:
       app: backend-api
@@ -14,14 +14,19 @@ spec:
     spec:
       containers:
       - name: backend-api
-        image: {{ .Values.image.repository }}/data_api:{{ .Values.image.tagbackend }}
-        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        image: {{ .Values.backend_api.image.repository }}/data_api:{{ .Values.backend_api.image.tagbackend }}
+        resources:
+          limits:
+            cpu: {{ .Values.backend_api.resources.limits.cpu }}
+            memory: {{ .Values.backend_api.resources.limits.memory }}
+          requests:
+            cpu: {{ .Values.backend_api.resources.requests.cpu }}
+            memory: {{ .Values.backend_api.resources.requests.memory }}
+        imagePullPolicy: {{ .Values.backend_api.image.pullPolicy }}
         ports:
         - containerPort: 5000
         securityContext:
-          readOnlyRootFilesystem: {{ .Values.securityContext.readOnlyRootFilesystem }}
-          runAsNonRoot: {{ .Values.securityContext.runAsNonRoot }}
-          runAsUser: {{ .Values.securityContext.runAsUser }}
-          allowPrivilegeEscalation: {{ .Values.securityContext.allowPrivilegeEscalation }}
-      imagePullSecrets:
-      - name: regcred
+          readOnlyRootFilesystem: {{ .Values.backend_api.securityContext.readOnlyRootFilesystem }}
+          runAsNonRoot: {{ .Values.backend_api.securityContext.runAsNonRoot }}
+          runAsUser: {{ .Values.backend_api.securityContext.runAsUser }}
+          allowPrivilegeEscalation: {{ .Values.backend_api.securityContext.allowPrivilegeEscalation }}

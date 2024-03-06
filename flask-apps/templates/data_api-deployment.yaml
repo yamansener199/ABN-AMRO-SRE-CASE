@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: data-api
 spec:
-  replicas: {{ .Values.replicaCount }}
+  replicas: {{ .Values.data_api.replicaCount }}
   selector:
     matchLabels:
       app: data-api
@@ -14,17 +14,22 @@ spec:
     spec:
       containers:
       - name: data-api
-        image: {{ .Values.image.repository }}/data_api:{{ .Values.image.tagdata }}
-        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        image: {{ .Values.data_api.image.repository }}/data_api:{{ .Values.data_api.image.tagdata }}
+        resources:
+          limits:
+            cpu: {{ .Values.data_api.resources.limits.cpu }}
+            memory: {{ .Values.data_api.resources.limits.memory }}
+          requests:
+            cpu: {{ .Values.data_api.resources.requests.cpu }}
+            memory: {{ .Values.data_api.resources.requests.memory }}
+        imagePullPolicy: {{ .Values.data_api.image.pullPolicy }}
         ports:
         - containerPort: 5000
         securityContext:
-          readOnlyRootFilesystem: {{ .Values.securityContext.readOnlyRootFilesystem }}
-          runAsNonRoot: {{ .Values.securityContext.runAsNonRoot }}
-          runAsUser: {{ .Values.securityContext.runAsUser }}
-          allowPrivilegeEscalation: {{ .Values.securityContext.allowPrivilegeEscalation }}
-      imagePullSecrets:
-      - name: regcred
+          readOnlyRootFilesystem: {{ .Values.data_api.securityContext.readOnlyRootFilesystem }}
+          runAsNonRoot: {{ .Values.data_api.securityContext.runAsNonRoot }}
+          runAsUser: {{ .Values.data_api.securityContext.runAsUser }}
+          allowPrivilegeEscalation: {{ .Values.data_api.securityContext.allowPrivilegeEscalation }}
       volumes:
       - name: main-volume
         persistentVolumeClaim:

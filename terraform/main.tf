@@ -14,7 +14,7 @@ resource "aws_eks_cluster" "case-eks" {
 
 resource "aws_eks_node_group" "node-ec2" {
   cluster_name    = aws_eks_cluster.case-eks.name
-  node_group_name = "t3_micro-node_group"
+  node_group_name = "t3_large-node_group"
   node_role_arn   = aws_iam_role.workernodes.arn
   subnet_ids = ["subnet-08425f773f2d4a055", "subnet-093ee1ff59056f956"]
 
@@ -25,7 +25,7 @@ resource "aws_eks_node_group" "node-ec2" {
   }
 
   ami_type       = "AL2_x86_64"
-  instance_types = ["t3a.medium"]
+  instance_types = ["t3a.large"]
   capacity_type  = "ON_DEMAND"
   disk_size      = 20
 
