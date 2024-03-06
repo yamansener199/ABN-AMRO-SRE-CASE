@@ -19,7 +19,7 @@ Update the backend and orchestrate migrating the 2 apps and script to kubernetes
 
 #### Submission Guidelines:
 - Add the necessary folder(s) and file(s).
-- If needed you may change the code structure or content or add technologirs, but its **not** a part of the assessment.
+- If needed you may change the code structure or content or add technologies, but its **not** a part of the assessment.
 - Ensure you include the necessary documentations.
 - Use git
 - Good luck
