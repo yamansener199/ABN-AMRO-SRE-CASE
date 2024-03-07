@@ -4,5 +4,5 @@
   gather_facts: yes
   roles:
     #- configure_aws_account
-    #- install_kubectl
+    #- install_side_packages
     - deploy_helm

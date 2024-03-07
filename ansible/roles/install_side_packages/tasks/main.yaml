@@ -1,0 +1,135 @@
+---
+- name: Update the apt package index and install packages needed to use the Kubernetes apt repository
+  become: yes
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - apt-transport-https
+    - ca-certificates
+    - curl
+
+- name: Download the public signing key for the Kubernetes package repositories
+  become: yes
+  shell: |
+    curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.29/deb/Release.key | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/kubernetes-apt-keyring.gpg
+  args:
+    creates: /etc/apt/trusted.gpg.d/kubernetes-apt-keyring.gpg
+
+- name: Add the appropriate Kubernetes apt repository
+  become: yes
+  apt_repository:
+    repo: "deb [signed-by=/etc/apt/trusted.gpg.d/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.29/deb/ /"
+    state: present
+
+- name: Update apt package index
+  become: yes
+  apt:
+    update_cache: yes
+
+- name: Install kubectl
+  become: yes
+  apt:
+    name: kubectl
+    state: present
+    update_cache: yes
+
+- name: Configure Kube Config
+  command: "aws eks update-kubeconfig --region {{ region | b64decode }}  --name {{ cluster_name }}"
+  environment:
+    AWS_PROFILE: "default"
+
+- name: Check access to EKS cluster using kubectl
+  command: "kubectl get nodes"
+  register: kubectl_output
+  ignore_errors: true
+
+- name: Print kubectl output
+  debug:
+    msg: "{{ kubectl_output.stdout }}"
+  when: kubectl_output.rc == 0
+
+- name: Install aptitude
+  apt:
+    name: aptitude
+    state: latest
+    update_cache: true
+  become: yes
+
+- name: Install required system packages
+  apt:
+    pkg:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - software-properties-common
+      - python3-pip
+      - virtualenv
+      - python3-setuptools
+    state: latest
+    update_cache: true
+  become: yes
+
+- name: Add Docker GPG apt Key
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+  become: yes
+
+- name: Add Docker Repository
+  apt_repository:
+    repo: deb https://download.docker.com/linux/ubuntu focal stable
+    state: present
+  become: yes
+
+- name: Update apt and install docker-ce
+  apt:
+    name: docker-ce
+    state: latest
+    update_cache: true
+  become: yes
+
+- name: Install Docker Module for Python
+  pip:
+    name: docker
+  become: yes
+
+- name: Import Helm GPG key
+  ansible.builtin.shell: "curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/share/keyrings/helm.gpg > /dev/null"
+  become: yes
+
+- name: Install apt-transport-https package
+  ansible.builtin.package:
+    name: apt-transport-https
+    state: present
+  become: yes
+
+- name: Create Helm sources list file if it doesn't exist
+  ansible.builtin.file:
+    path: /etc/apt/sources.list.d/helm-stable-debian.list
+    state: touch
+  become: yes
+
+- name: Add Helm repository to sources list
+  ansible.builtin.lineinfile:
+    dest: /etc/apt/sources.list.d/helm-stable-debian.list
+    line: "deb [arch={{ ansible_architecture }} signed-by=/usr/share/keyrings/helm.gpg] https://baltocdn.com/helm/stable/debian/ all main"
+  become: yes
+
+- name: Update apt repositories
+  ansible.builtin.apt:
+    update_cache: yes
+  become: yes
+
+- name: Check if Helm is installed
+  ansible.builtin.stat:
+    path: /usr/local/bin/helm
+  register: helm_installed
+
+- name: Install Helm using snap
+  ansible.builtin.snap:
+    name: helm
+    classic: yes
+    state: present
+  when: helm_installed.stat.exists == False
+  become: yes

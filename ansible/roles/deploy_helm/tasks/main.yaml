@@ -1,26 +1,22 @@
 ---
 - name: Get ECR login token
-  command: "aws ecr get-login-password --region {{ region | b64decode }}"
+  command: "aws ecr get-login-password --region {{ ecr_region }}"
   environment:
     AWS_PROFILE: "default"
   register: ecr_login_password
   changed_when: false
 
 - name: Log in to AWS ECR
-  command: "docker login -u AWS -p {{ ecr_login_password.stdout }} {{ aws_account_number | b64decode }}.dkr.ecr.{{ region | b64decode }}.amazonaws.com"
+  command: "docker login -u AWS -p {{ ecr_login_password.stdout }} {{ aws_account_number | b64decode }}.dkr.ecr.{{ ecr_region }}.amazonaws.com"
 
-- name: Add helm repo
-  kubernetes.core.helm_repository:
-    name: bitnami
-    repo_url: "{{ helm_chart_url }}"
+- name: Download Chart from repo
+  command: "helm pull oci://816731947491.dkr.ecr.eu-west-2.amazonaws.com/flask-apps --version 0.1.1"
 
-- name: Install Nginx Chart
-  kubernetes.core.helm:
-    name: nginx-server
-    namespace: testing
-    chart_ref: bitnami/nginx
+- name: Unzip the .tgz file
+  ansible.builtin.unarchive:
+    src: ~/flask-apps-0.1.1.tgz
+    dest: ~/
+    remote_src: yes
 
-- name: Gather information about nginx-server
-  kubernetes.core.helm_info:
-    name: nginx-server
-    release_namespace: testing
+- name: Deploy Helm to Kubernetes Cluster
+  command: "helm install flask-apps ./flask-apps"
