@@ -1,14 +1,26 @@
 ---
-- name: Configure Kube Config
-  command: "aws eks update-kubeconfig --region {{ region | b64decode }}  --name {{ cluster_name }}"
+- name: Get ECR login token
+  command: "aws ecr get-login-password --region {{ region | b64decode }}"
   environment:
     AWS_PROFILE: "default"
-- name: Check access to EKS cluster using kubectl
-  command: "kubectl get nodes"
-  register: kubectl_output
-  ignore_errors: true
+  register: ecr_login_password
+  changed_when: false
 
-- name: Print kubectl output
-  debug:
-    msg: "{{ kubectl_output.stdout }}"
-  when: kubectl_output.rc == 0
+- name: Log in to AWS ECR
+  command: "docker login -u AWS -p {{ ecr_login_password.stdout }} {{ aws_account_number | b64decode }}.dkr.ecr.{{ region | b64decode }}.amazonaws.com"
+
+- name: Add helm repo
+  kubernetes.core.helm_repository:
+    name: bitnami
+    repo_url: "{{ helm_chart_url }}"
+
+- name: Install Nginx Chart
+  kubernetes.core.helm:
+    name: nginx-server
+    namespace: testing
+    chart_ref: bitnami/nginx
+
+- name: Gather information about nginx-server
+  kubernetes.core.helm_info:
+    name: nginx-server
+    release_namespace: testing
