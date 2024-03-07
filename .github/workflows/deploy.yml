@@ -52,3 +52,11 @@ jobs:
         docker push $ECR_REGISTRY/$ECR_REPOSITORY_2:$IMAGE_TAG
         sed -i 's/tagdata:.*/tagdata: $IMAGE_TAG/g' ./flask-apps/values.yaml
         echo "image=$ECR_REGISTRY/$ECR_REPOSITORY_2:$IMAGE_TAG" >> $GITHUB_OUTPUT
+
+    - name: Package Helm and push to ECR Repository
+      id: helm-package
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+      run: |
+        helm package ./flask-apps
+      

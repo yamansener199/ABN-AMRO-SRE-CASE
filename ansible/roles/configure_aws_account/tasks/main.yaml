@@ -1,0 +1,61 @@
+---
+- name: Check if AWS CLI is already installed
+  command: "which aws"
+  register: aws_command_output
+  ignore_errors: true
+
+- name: Install AWS CLI if not already installed
+  block:
+    - name: Download AWS CLI
+      get_url:
+        url: "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip"
+        dest: "/tmp/awscliv2.zip"
+
+    - name: Ensure destination directory exists
+      file:
+        path: "/tmp/aws"
+        state: directory
+
+    - name: Install unzip package
+      become: yes
+      package:
+        name: unzip
+        state: present
+
+    - name: Unzip AWS CLI
+      unarchive:
+        src: "/tmp/awscliv2.zip"
+        dest: "/tmp/aws"
+        remote_src: yes
+
+    - name: Run AWS CLI installation script
+      command: "/tmp/aws/install"
+      become: yes
+
+    - name: Add aws command to PATH
+      lineinfile:
+        path: "{{ ansible_env.HOME }}/.bashrc"
+        line: 'export PATH=$PATH:/usr/local/bin/aws'
+        create: yes
+      become: yes
+      when: ansible_env.HOME is defined and ansible_env.HOME != ''
+  when: aws_command_output.rc != 0
+
+- name: Configure AWS account
+  command: "aws configure set {{ item.key }} {{ item.value }}"
+  #To prevent credentials showing plaintext
+  no_log: true
+  with_items:
+    - { key: "aws_access_key_id", value: "{{ aws_access_key_id | b64decode }}" }
+    - { key: "aws_secret_access_key", value: "{{ aws_secret_access_key | b64decode }}" }
+    - { key: "region", value: "{{ region | b64decode }}" }
+
+- name: Check AWS account configuration
+  command: "aws sts get-caller-identity"
+  register: aws_caller_identity
+  ignore_errors: true
+
+- name: Print AWS account information
+  debug:
+    msg: "AWS Account ID: {{ aws_caller_identity.stdout | from_json | json_query('Account') }}\n"
+  when: aws_caller_identity.rc == 0

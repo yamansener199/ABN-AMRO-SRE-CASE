@@ -1,0 +1,14 @@
+---
+- name: Configure Kube Config
+  command: "aws eks update-kubeconfig --region {{ region | b64decode }}  --name {{ cluster_name }}"
+  environment:
+    AWS_PROFILE: "default"
+- name: Check access to EKS cluster using kubectl
+  command: "kubectl get nodes"
+  register: kubectl_output
+  ignore_errors: true
+
+- name: Print kubectl output
+  debug:
+    msg: "{{ kubectl_output.stdout }}"
+  when: kubectl_output.rc == 0

@@ -1,0 +1,35 @@
+---
+- name: Update the apt package index and install packages needed to use the Kubernetes apt repository
+  become: yes
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - apt-transport-https
+    - ca-certificates
+    - curl
+
+- name: Download the public signing key for the Kubernetes package repositories
+  become: yes
+  shell: |
+    curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.29/deb/Release.key | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/kubernetes-apt-keyring.gpg
+  args:
+    creates: /etc/apt/trusted.gpg.d/kubernetes-apt-keyring.gpg
+
+- name: Add the appropriate Kubernetes apt repository
+  become: yes
+  apt_repository:
+    repo: "deb [signed-by=/etc/apt/trusted.gpg.d/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.29/deb/ /"
+    state: present
+
+- name: Update apt package index
+  become: yes
+  apt:
+    update_cache: yes
+
+- name: Install kubectl
+  become: yes
+  apt:
+    name: kubectl
+    state: present
+    update_cache: yes

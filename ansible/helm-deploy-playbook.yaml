@@ -1,0 +1,8 @@
+---
+- name: Ping hosts
+  hosts: bastion
+  gather_facts: yes
+  roles:
+    - configure_aws_account
+    - install_kubectl
+    - deploy_helm
