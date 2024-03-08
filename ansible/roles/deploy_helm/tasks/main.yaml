@@ -19,4 +19,4 @@
     remote_src: yes
 
 - name: Deploy Helm to Kubernetes Cluster
-  command: "helm install {{ chart_image }} ./{{ chart_image }}"
+  command: "helm upgrade --install {{ chart_image }} ./{{ chart_image }}"
