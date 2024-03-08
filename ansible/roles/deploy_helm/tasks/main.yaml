@@ -10,13 +10,13 @@
   command: "docker login -u AWS -p {{ ecr_login_password.stdout }} {{ aws_account_number | b64decode }}.dkr.ecr.{{ ecr_region }}.amazonaws.com"
 
 - name: Download Chart from repo
-  command: "helm pull oci://816731947491.dkr.ecr.eu-west-2.amazonaws.com/flask-apps --version 0.1.1"
+  command: "helm pull oci://{{ aws_account_number | b64decode }}.dkr.ecr.{{ ecr_region }}.amazonaws.com/{{ chart_image }} --version {{ version }}"
 
 - name: Unzip the .tgz file
   ansible.builtin.unarchive:
-    src: ~/flask-apps-0.1.1.tgz
+    src: ~/{{ chart_image }}-{{ version }}.tgz
     dest: ~/
     remote_src: yes
 
 - name: Deploy Helm to Kubernetes Cluster
-  command: "helm install flask-apps ./flask-apps"
+  command: "helm install {{ chart_image }} ./{{ chart_image }}"

@@ -29,16 +29,11 @@ spec:
           initialDelaySeconds: 20
           periodSeconds: 5
         imagePullPolicy: {{ .Values.backend_api.image.pullPolicy }}
-        env:          
-          - name: "USERNAME"
+        env:
+          - name: "EXTERNAL_INTEGRATION_KEY"
             valueFrom:
               secretKeyRef:
-                key:  username
-                name: {{ .Release.Name }}-backend-auth
-          - name: "PASSWORD"
-            valueFrom:
-              secretKeyRef:
-                key:  password
+                key: api_key
                 name: {{ .Release.Name }}-backend-auth
         ports:
         - containerPort: 5000
@@ -47,3 +42,4 @@ spec:
           runAsNonRoot: {{ .Values.backend_api.securityContext.runAsNonRoot }}
           runAsUser: {{ .Values.backend_api.securityContext.runAsUser }}
           allowPrivilegeEscalation: {{ .Values.backend_api.securityContext.allowPrivilegeEscalation }}
+      

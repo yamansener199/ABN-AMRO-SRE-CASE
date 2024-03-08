@@ -51,12 +51,13 @@ backend_api:
     targetMemoryUtilizationPercentage: 80
 
   external_integration_keys:
+    env: "dev"
     dev:
-      api_key: ""
+      api_key: "adsfk2123jlsjflsdf"
     staging:
-      api_key: ""
+      api_key: "asdf3229349jskldf"
     prod:
-      api_key: ""
+      api_key: "ksdlkfj392394sdfsdf"
 
 
 data_api:

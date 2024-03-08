@@ -2,7 +2,5 @@ region: "ZXUtY2VudHJhbC0x"
 cluster_name: "case-eks-cluster"
 aws_account_number: "ODE2NzMxOTQ3NDkx"
 ecr_region: "eu-west-2"
-ecr_url: "816731947491.dkr.ecr.eu-west-2.amazonaws.com"
-#flask-apps
 chart_image: "flask-apps"
 version: "0.1.1"
