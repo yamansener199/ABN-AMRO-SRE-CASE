@@ -2,14 +2,15 @@
 
 ## Technologies Used
 
-![GitHub Actions](https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png)
-![Docker](https://www.docker.com/sites/default/files/d8/2019-07/Moby-logo.png)
-![Kubernetes](https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Kubernetes_logo_without_workmark.svg/1200px-Kubernetes_logo_without_workmark.svg.png)
-![Ansible](https://www.ansible.com/hubfs/2017_Images/Assets/Ansible-Mark-RGB_Pool.svg)
-![Python](https://www.python.org/static/img/python-logo.png)
-![Git](https://git-scm.com/images/logos/downloads/Git-Logo-2Color.png)
-![Helm](https://helm.sh/img/helm.svg)
-![Bash](https://upload.wikimedia.org/wikipedia/commons/8/82/Gnu-bash-logo.svg)
+[![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-Workflow-2088FF?logo=github-actions)](https://github.com/features/actions)
+[![Docker](https://img.shields.io/badge/Docker-Container-2496ED?logo=docker)](https://www.docker.com/)
+[![Kubernetes](https://img.shields.io/badge/Kubernetes-Cluster-326CE5?logo=kubernetes)](https://kubernetes.io/)
+[![Ansible](https://img.shields.io/badge/Ansible-Automation-EE0000?logo=ansible)](https://www.ansible.com/)
+[![Python](https://img.shields.io/badge/Python-Scripting-3776AB?logo=python)](https://www.python.org/)
+[![Git](https://img.shields.io/badge/Git-Version%20Control-F05032?logo=git)](https://git-scm.com/)
+[![Helm](https://img.shields.io/badge/Helm-Deploy%20Charts-277A9F?logo=helm)](https://helm.sh/)
+[![Bash](https://img.shields.io/badge/Bash-Scripting-4EAA25?logo=gnu-bash)](https://www.gnu.org/software/bash/)
+
 
 ## Explanation of the Main Components
 
