@@ -5,17 +5,15 @@
 </p>
 
 <h2>Technologies Used</h2>
+![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
+![Kubernetes](https://img.shields.io/badge/Kubernetes-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white)
+![Ansible](https://img.shields.io/badge/Ansible-EE0000?style=for-the-badge&logo=ansible&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)
+![Helm](https://img.shields.io/badge/Helm-277A9F?style=for-the-badge&logo=helm&logoColor=white)
+![Bash](https://img.shields.io/badge/Bash-4EAA25?style=for-the-badge&logo=gnu-bash&logoColor=white)
 
-<div style="text-align: center;">
-        <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" width="100" height="100">
-        <img src="https://www.docker.com/sites/default/files/d8/2019-07/Moby-logo.png" width="100" height="100">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Kubernetes_logo_without_workmark.svg/1200px-Kubernetes_logo_without_workmark.svg.png" width="100" height="100">
-        <img src="https://www.ansible.com/hubfs/2017_Images/Assets/Ansible-Mark-RGB_Pool.svg" width="100" height="100">
-        <img src="https://www.python.org/static/img/python-logo.png" width="100" height="100">
-        <img src="https://git-scm.com/images/logos/downloads/Git-Logo-2Color.png" width="100" height="100">
-        <img src="https://helm.sh/img/helm.svg" width="100" height="100">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Gnu-bash-logo.svg" width="100" height="100">
-</div>
 
 <h2>Getting Started</h2>
 
