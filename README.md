@@ -10,6 +10,8 @@
 [![Git](https://img.shields.io/badge/Git-Version%20Control-F05032?logo=git)](https://git-scm.com/)
 [![Helm](https://img.shields.io/badge/Helm-Deploy%20Charts-277A9F?logo=helm)](https://helm.sh/)
 [![Bash](https://img.shields.io/badge/Bash-Scripting-4EAA25?logo=gnu-bash)](https://www.gnu.org/software/bash/)
+[![GitHub Actions Status](https://img.shields.io/github/workflow/status/yamansener199/ABN-AMRO-SRE-CASE/deploy.yml?label=GitHub%20Actions&logo=github)](https://github.com/yamansener199/ABN-AMRO-SRE-CASE/actions)
+
 
 
 ## Explanation of the Main Components
